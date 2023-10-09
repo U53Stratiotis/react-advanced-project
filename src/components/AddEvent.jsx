@@ -1,123 +1,49 @@
-import React, { useState } from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
-  Select,
-  Button,
-} from "@chakra-ui/react";
+import { useLoaderData, Form, redirect } from "react-router-dom";
 
-const AddEvent = ({ isOpen, onClose, categories, onSubmit }) => {
-  const [newEvent, setNewEvent] = useState({
-    title: "",
-    description: "",
-    image: "",
-    startTime: "",
-    endTime: "",
-    categoryIds: [],
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewEvent({ ...newEvent, [name]: value });
-  };
-
-  const handleCategoryChange = (e) => {
-    const selectedCategories = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setNewEvent({ ...newEvent, categoryIds: selectedCategories });
-  };
-
-  const handleSubmit = () => {
-    onSubmit(newEvent);
-  };
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Add Event</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input
-              type="text"
-              name="title"
-              value={newEvent.title}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Short Description</FormLabel>
-            <Textarea
-              name="description"
-              value={newEvent.description}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Image URL</FormLabel>
-            <Input
-              type="text"
-              name="image"
-              value={newEvent.image}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Start Time</FormLabel>
-            <Input
-              type="datetime-local"
-              name="startTime"
-              value={newEvent.startTime}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>End Time</FormLabel>
-            <Input
-              type="datetime-local"
-              name="endTime"
-              value={newEvent.endTime}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Categories</FormLabel>
-            <Select
-              multiple
-              name="categoryIds"
-              value={newEvent.categoryIds}
-              onChange={handleCategoryChange}
-            >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-            Save
-          </Button>
-          <Button onClick={onClose}>Close</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
+export const action = async ({ request }) => {
+  // Object.fromEntries transforms data to an object
+  const formData = Object.fromEntries(await request.formData());
+  // Await the fetch to "http://localhost:3000/posts". Give it an options object where we set the method to “POST”.
+  // We use JSON.stringify() to convert the object with all the form data to JSON and assign it to the body of the request.
+  const newId = await fetch("http://localhost:3000/events", {
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: { "Content-Type": "application/json" },
+  })
+    // Convert the response to JSON.
+    .then((res) => res.json())
+    .then((json) => json.id);
+  return redirect(`/event/${newId}`);
 };
 
-export default AddEvent;
+export const loader = async () => {
+  return await fetch("http://localhost:3000/categories");
+};
+
+export const AddEvent = () => {
+  const categories = useLoaderData();
+
+  return (
+    <div className="new-post">
+      <Form method="post">
+        <label>
+          <span>Title</span>
+          <input name="title"></input>
+        </label>
+        <label>
+          <span>Description</span>
+          <textarea name="body" rows="6" />
+        </label>
+        <label>
+          <span>Categories</span>
+          <select name="userId">
+            {categories.map((user) => (
+              <option value={categories.id}>{categories.name}</option>
+            ))}
+          </select>
+        </label>
+        <button type="submit">Save</button>
+      </Form>
+    </div>
+  );
+};
