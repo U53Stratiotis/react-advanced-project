@@ -37,8 +37,8 @@ export const AddEvent = () => {
         <label>
           <span>Categories</span>
           <select name="userId">
-            {categories.map((user) => (
-              <option value={categories.id}>{categories.name}</option>
+            {categories.map((cat) => (
+              <option value={cat.id}>{cat.name}</option>
             ))}
           </select>
         </label>
