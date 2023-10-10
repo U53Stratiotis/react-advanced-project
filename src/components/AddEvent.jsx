@@ -16,12 +16,19 @@ export const action = async ({ request }) => {
   return redirect(`/event/${newId}`);
 };
 
-export const loader = async () => {
-  return await fetch("http://localhost:3000/categories");
+export const loader = async (url) => {
+  return await fetch(url);
 };
 
+// export const loader = async () => {
+//   return await fetch("http://localhost:3000/categories");
+// };
+
+const categories = await loader("http://localhost:3000/categories");
+const users = await loader("http://localhost:3000/users");
+
 export const AddEvent = () => {
-  const categories = useLoaderData();
+  const { categories, users } = useLoaderData();
 
   return (
     <div className="new-post">
@@ -32,7 +39,11 @@ export const AddEvent = () => {
         </label>
         <label>
           <span>Description</span>
-          <textarea name="body" rows="6" />
+          <textarea name="description" rows="6" />
+        </label>
+        <label>
+          <span>Image URL</span>
+          <input name="img-url" type="url" />
         </label>
         <label>
           <span>Categories</span>
@@ -41,6 +52,16 @@ export const AddEvent = () => {
               <option value={cat.id}>{cat.name}</option>
             ))}
           </select>
+          <span>Author</span>
+          <select name="userId">
+            {users.map((user) => (
+              <option value={user.id}>{user.name}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Date</span>
+          <input name="img-url" type="date" />
         </label>
         <button type="submit">Save</button>
       </Form>
