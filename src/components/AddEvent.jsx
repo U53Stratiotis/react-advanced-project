@@ -3,8 +3,6 @@ import { useLoaderData, Form, redirect } from "react-router-dom";
 export const action = async ({ request }) => {
   // Object.fromEntries transforms data to an object
   const formData = Object.fromEntries(await request.formData());
-  // Await the fetch to "http://localhost:3000/posts". Give it an options object where we set the method to “POST”.
-  // We use JSON.stringify() to convert the object with all the form data to JSON and assign it to the body of the request.
   const newId = await fetch("http://localhost:3000/events", {
     method: "POST",
     body: JSON.stringify(formData),
