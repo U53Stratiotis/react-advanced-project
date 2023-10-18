@@ -100,7 +100,11 @@ export const EventsPage = () => {
           </Grid>
         </Box>
       </Box>
-      {isFormVisible && <AddEvent closeForm={closeForm} />}
+      {isFormVisible && (
+        <Modal isOpen={isFormVisible} onClose={closeForm}>
+          <AddEvent closeForm={closeForm} />
+        </Modal>
+      )}
     </>
   );
 };
