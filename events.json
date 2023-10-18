@@ -69,6 +69,14 @@
     {
       "name": "relaxation",
       "id": 3
+    },
+    {
+      "name": "study",
+      "id": 4
+    },
+    {
+      "name": "art",
+      "id": 5
     }
   ]
 }

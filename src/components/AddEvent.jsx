@@ -1,4 +1,5 @@
 import { useLoaderData, Form, redirect } from "react-router-dom";
+import styles from "./AddEvent.module.css";
 
 export const action = async ({ request }) => {
   // Object.fromEntries transforms data to an object
@@ -14,22 +15,24 @@ export const action = async ({ request }) => {
   return redirect(`/event/${newId}`);
 };
 
-export const loader = async (url) => {
-  return await fetch(url);
+export const loader = async () => {
+  const categoriesResponse = await fetch("http://localhost:3000/categories");
+  const usersResponse = await fetch("http://localhost:3000/users");
+
+  const categoriesData = await categoriesResponse.json();
+  const usersData = await usersResponse.json();
+
+  return {
+    categories: categoriesData,
+    users: usersData,
+  };
 };
 
-// export const loader = async () => {
-//   return await fetch("http://localhost:3000/categories");
-// };
-
-const categories = await loader("http://localhost:3000/categories");
-const users = await loader("http://localhost:3000/users");
-
-export const AddEvent = () => {
+export const AddEvent = ({ closeForm }) => {
   const { categories, users } = useLoaderData();
 
   return (
-    <div className="new-post">
+    <div className={styles.newPost}>
       <Form method="post">
         <label>
           <span>Title</span>
@@ -47,13 +50,19 @@ export const AddEvent = () => {
           <span>Categories</span>
           <select name="userId">
             {categories.map((cat) => (
-              <option value={cat.id}>{cat.name}</option>
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
             ))}
           </select>
+        </label>
+        <label>
           <span>Author</span>
           <select name="userId">
             {users.map((user) => (
-              <option value={user.id}>{user.name}</option>
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
             ))}
           </select>
         </label>
@@ -61,7 +70,9 @@ export const AddEvent = () => {
           <span>Date</span>
           <input name="img-url" type="date" />
         </label>
-        <button type="submit">Save</button>
+        <button type="submit" onClick={closeForm}>
+          Save
+        </button>
       </Form>
     </div>
   );

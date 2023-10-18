@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { AddEvent } from "../components/AddEvent";
+import { AddEvent } from "../components/AddEvent";
 import {
   Heading,
   Center,
@@ -8,6 +8,7 @@ import {
   Grid,
   GridItem,
   Button,
+  Modal,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
 import styles from "./EventsPage.module.css";
@@ -15,19 +16,32 @@ import styles from "./EventsPage.module.css";
 export const loader = async () => {
   const events = await fetch(`http://localhost:3000/events`);
   const categories = await fetch(`http://localhost:3000/categories`);
+  const users = await fetch("http://localhost:3000/users");
 
   const eventsData = await events.json();
   const categoriesData = await categories.json();
+  const usersData = await users.json();
 
   return {
     events: eventsData,
     categories: categoriesData,
+    users: usersData,
   };
 };
 
 export const EventsPage = () => {
   const { events, categories } = useLoaderData();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const openForm = () => {
+    setIsFormVisible(true);
+    console.log("Form vissible");
+  };
+
+  const closeForm = () => {
+    setIsFormVisible(false);
+    console.log("Form closed");
+  };
 
   const categoriesList = (categoryIds) => {
     return categoryIds.map((categoryId) => {
@@ -75,7 +89,7 @@ export const EventsPage = () => {
             bg="black"
             textColor="white"
             _hover={{ textColor: "black", bg: "white" }}
-            // onClick={onOpen}
+            onClick={openForm}
           >
             Add event{" "}
           </Button>
@@ -86,6 +100,7 @@ export const EventsPage = () => {
           </Grid>
         </Box>
       </Box>
+      {isFormVisible && <AddEvent closeForm={closeForm} />}
     </>
   );
 };
