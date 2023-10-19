@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import styles from './Navigation. module.css';
+import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
   return (
-    <nav>
+    <nav className={styles.navContainer}>
       <ul>
         <li>
           <Link to="/">Events</Link>

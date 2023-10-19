@@ -1,0 +1,29 @@
+/* Navigation.module.css */
+.navContainer {
+  background-color: #333;
+  padding: 0.8rem 0;
+}
+
+.navContainer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
+
+.navContainer li {
+  margin: 0;
+}
+
+.navContainer a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  transition: color 0.3s;
+}
+
+.navContainer a:hover {
+  color: #007bff;
+}
