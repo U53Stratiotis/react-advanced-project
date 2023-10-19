@@ -35,21 +35,21 @@ export const AddEvent = ({ closeForm }) => {
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
         <Form method="post">
-          <label>
+          <label class={styles.titleContainer}>
             <span>Title</span>
-            <input name="title"></input>
+            <input name="title" maxlength="20" />
           </label>
           <label>
-            <span>Description</span>
-            <textarea name="description" rows="6" />
+            <span>Description (Max 35 letters)</span>
+            <textarea name="description" rows="2" maxlength="35" />
           </label>
           <label>
             <span>Image URL</span>
             <input name="img-url" type="url" />
           </label>
           <label>
-            <span>Categories</span>
-            <select name="userId">
+            <span>Categories (CTRL+Click to select multiple)</span>
+            <select name="userId" multiple>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -71,10 +71,18 @@ export const AddEvent = ({ closeForm }) => {
             <span>Date</span>
             <input name="img-url" type="date" />
           </label>
-          <button type="submit" onClick={closeForm}>
-            Save
-          </button>
-          <button onClick={closeForm}>Close</button>
+          <div className={styles.buttonsContainer}>
+            <button
+              type="submit"
+              onClick={closeForm}
+              className={styles.saveButton}
+            >
+              Save
+            </button>
+            <button onClick={closeForm} className={styles.closeButton}>
+              Close
+            </button>
+          </div>
         </Form>
       </div>
     </div>
