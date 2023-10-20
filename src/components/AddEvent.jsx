@@ -12,29 +12,18 @@ export const action = async ({ request }) => {
     // Convert the response to JSON.
     .then((res) => res.json())
     .then((json) => json.id);
+  console.log("Post created");
   return redirect(`/event/${newId}`);
 };
 
-export const loader = async () => {
-  const categoriesResponse = await fetch("http://localhost:3000/categories");
-  const usersResponse = await fetch("http://localhost:3000/users");
-
-  const categoriesData = await categoriesResponse.json();
-  const usersData = await usersResponse.json();
-
-  return {
-    categories: categoriesData,
-    users: usersData,
-  };
-};
-
-export const AddEvent = ({ closeForm }) => {
-  const { categories, users } = useLoaderData();
+export const AddEvent = ({ closeForm, categories, users }) => {
+  console.log(categories);
+  console.log(users);
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
-        <Form method="post">
+        <Form method="post" onSubmit={action}>
           <label class={styles.titleContainer}>
             <span>Title</span>
             <input name="title" maxlength="20" />

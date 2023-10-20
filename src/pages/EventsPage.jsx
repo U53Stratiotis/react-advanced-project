@@ -30,7 +30,7 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-  const { events, categories } = useLoaderData();
+  const { events, categories, users } = useLoaderData();
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const openForm = () => {
@@ -80,12 +80,8 @@ export const EventsPage = () => {
     <>
       <Box bg="lightgray">
         <Center>
-          <Heading mt={8} mb={8}>
-            List of events
-          </Heading>
-        </Center>
-        <Center>
           <Button
+            mt={8}
             bg="black"
             textColor="white"
             _hover={{ textColor: "black", bg: "white" }}
@@ -102,7 +98,11 @@ export const EventsPage = () => {
       </Box>
       {isFormVisible && (
         <Modal isOpen={isFormVisible} onClose={closeForm}>
-          <AddEvent closeForm={closeForm} />
+          <AddEvent
+            closeForm={closeForm}
+            categories={categories}
+            users={users}
+          />
         </Modal>
       )}
     </>
