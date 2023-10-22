@@ -12,7 +12,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
   const [location, setLocation] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [isPending, setIsPending] = useState(false);
 
   const handleCategoryChange = (e) => {
     const selectedCategoryIds = Array.from(
@@ -43,9 +42,9 @@ export const AddEvent = ({ closeForm, categories, users }) => {
       headers: { "Content-Type": "application/json" },
     }).then(() => {
       console.log("new event added");
-      setIsPending(false);
+      closeForm();
+      window.location.reload();
     });
-    closeForm();
   };
 
   return (
