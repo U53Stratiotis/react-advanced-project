@@ -84,7 +84,11 @@ export const EventsPage = () => {
             mt={8}
             bg="black"
             textColor="white"
-            _hover={{ textColor: "black", bg: "white" }}
+            _hover={{
+              textColor: "black",
+              bg: "white",
+              transition: "color 1s, background-color 1s",
+            }}
             onClick={openForm}
           >
             Add event{" "}
