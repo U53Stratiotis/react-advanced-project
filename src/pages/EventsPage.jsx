@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AddEvent } from "../components/AddEvent";
 import {
-  Heading,
   Center,
   Box,
   Image,
@@ -11,9 +10,10 @@ import {
   Modal,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
+import { useContextData } from "../context/AppContext";
 import styles from "./EventsPage.module.css";
 
-export const loader = async () => {
+export const fetchData = async () => {
   const events = await fetch(`http://localhost:3000/events`);
   const categories = await fetch(`http://localhost:3000/categories`);
   const users = await fetch("http://localhost:3000/users");
@@ -21,7 +21,6 @@ export const loader = async () => {
   const eventsData = await events.json();
   const categoriesData = await categories.json();
   const usersData = await users.json();
-
   return {
     events: eventsData,
     categories: categoriesData,
@@ -32,6 +31,7 @@ export const loader = async () => {
 export const EventsPage = () => {
   const { events, categories, users } = useLoaderData();
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const { filteredEvents } = useContextData();
 
   const openForm = () => {
     setIsFormVisible(true);
@@ -51,8 +51,8 @@ export const EventsPage = () => {
   };
 
   // Add the following details when displaying an event: title, description, image, startTime & endTime, categories
-  const eventGrid = events.map((event) => (
-    <Center>
+  const eventGrid = filteredEvents.map((event) => (
+    <Center key={event.id}>
       <div className={styles.cards}>
         <GridItem key={event.id} className="event" colSpan={1} rowSpan={1}>
           <Link to={`/event/${event.id}`}>
@@ -81,7 +81,8 @@ export const EventsPage = () => {
       <Box bg="lightgray">
         <Center>
           <Button
-            mt={8}
+            position="fixed"
+            mt={20}
             bg="black"
             textColor="white"
             _hover={{
@@ -95,7 +96,7 @@ export const EventsPage = () => {
           </Button>
         </Center>
         <Box>
-          <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+          <Grid templateColumns="repeat(2, 1fr)" gap={4} mt={20}>
             {eventGrid}
           </Grid>
         </Box>

@@ -2,8 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { EventPage } from "./pages/EventPage";
-import { EventsPage, loader as eventListLoader } from "./pages/EventsPage";
-// import { AddEvent, action as createEvent } from "./components/AddEvent";
+import { EventsPage, fetchData as eventListLoader } from "./pages/EventsPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 

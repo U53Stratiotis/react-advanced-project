@@ -34,7 +34,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
       startTime,
       endTime,
     };
-    setIsPending(true);
 
     fetch("http://localhost:3000/events", {
       method: "POST",
