@@ -112,7 +112,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             />
           </label>
           <label>
-            <span>Start time</span>
+            <span className={styles.startTimeMargin}>Start time:</span>
             <input
               name="date"
               type="datetime-local"
@@ -120,7 +120,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             />
           </label>
           <label>
-            <span>End time</span>
+            <span className={styles.endTimeMargin}>End time:</span>
             <input
               name="date"
               type="datetime-local"

@@ -1,16 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
 import { useContextData } from "../context/AppContext";
 import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
-  const { filteredEvents, setSearchText } = useContextData();
+  const { filterEvents, setSearchText } = useContextData();
 
   const handleSearchChange = (e) => {
-    console.log(filteredEvents);
-    const searchText = e.target.value;
-    setSearchText(searchText);
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchText(searchTerm);
+    filterEvents();
   };
 
   return (
@@ -21,14 +20,12 @@ export const Navigation = () => {
         </li>
         <div className={styles.searchContainer}>
           <input
+            name="searchbar"
             type="text"
             className={styles.searchInput}
             placeholder="Search..."
             onChange={handleSearchChange}
           />
-          <button className={styles.searchButton}>
-            <FaSearch />
-          </button>
         </div>
         <li>
           <Link to="/event/1">Event</Link>

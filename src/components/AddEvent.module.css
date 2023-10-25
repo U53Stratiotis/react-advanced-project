@@ -17,7 +17,7 @@
   background-color: #fff;
   padding: 1rem;
   border: 1px solid #000000;
-  border-radius: 1rem;
+  border-radius: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
   width: 30%;
   z-index: 1001;
@@ -89,4 +89,18 @@ button {
 
 .closeButton:hover {
   background-color: red;
+}
+
+span {
+  font-weight: bold;
+}
+
+.startTimeMargin {
+  margin-right: 5.4rem; /* Adjust the margin as needed */
+  font-weight: bold; /* Optional: To make the text bold */
+}
+
+.endTimeMargin {
+  margin-right: 6rem; /* Adjust the margin as needed */
+  font-weight: bold; /* Optional: To make the text bold */
 }

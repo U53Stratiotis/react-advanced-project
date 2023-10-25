@@ -4,38 +4,58 @@ export const AppContext = createContext({});
 
 export const fetchData = async () => {
   const events = await fetch(`http://localhost:3000/events`);
+  const categories = await fetch(`http://localhost:3000/categories`);
+  const users = await fetch("http://localhost:3000/users");
+
   const eventsData = await events.json();
+  const categoriesData = await categories.json();
+  const usersData = await users.json();
 
   return {
     events: eventsData,
+    categories: categoriesData,
+    users: usersData,
   };
 };
 
 export const AppContextProvider = ({ children }) => {
   const [searchText, setSearchText] = useState("");
+  const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [categories, setCategories] = useState();
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     fetchData().then((data) => {
+      setEvents(data.events);
       setFilteredEvents(data.events);
+      setCategories(data.categories);
+      setUsers(data.users);
     });
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []);
 
   const filterEvents = () => {
-    return filteredEvents?.filter((event) =>
+    const filteredData = filteredEvents?.filter((event) =>
       event?.title?.toLowerCase().includes(searchText.toLowerCase())
     );
+
+    // console.log(filteredData);
+    setFilteredEvents(filteredData);
+    return filteredData;
   };
 
   return (
     <AppContext.Provider
       value={{
+        events,
         searchText,
         setSearchText,
         filteredEvents,
         setFilteredEvents,
-        // categories,
-        // setCategories,
+        users,
+        setUsers,
+        categories,
+        setCategories,
         filterEvents,
       }}
     >
