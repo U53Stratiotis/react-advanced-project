@@ -24,6 +24,7 @@ export const AppContextProvider = ({ children }) => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [categories, setCategories] = useState();
   const [users, setUsers] = useState();
+  const [lastClickedEvent, setLastClickedEvent] = useState(false);
 
   useEffect(() => {
     fetchData().then((data) => {
@@ -57,6 +58,8 @@ export const AppContextProvider = ({ children }) => {
         categories,
         setCategories,
         filterEvents,
+        lastClickedEvent,
+        setLastClickedEvent,
       }}
     >
       {children}

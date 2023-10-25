@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
-import { Heading, Box, Image, Text, Flex, Center } from "@chakra-ui/react";
-// details on the screen: title, description, image, startTime & endTime, categories and by who it’s created (name, image)
+// import { EditEvent} from "../components/EditEvent";
+import {
+  Heading,
+  Box,
+  Image,
+  Text,
+  Flex,
+  Center,
+  Button,
+} from "@chakra-ui/react";
 
 export const loader = async () => {
   const events = await fetch(`http://localhost:3000/events`);
@@ -20,14 +28,20 @@ export const loader = async () => {
   };
 };
 
-const boldTextStyle = { fontWeight: "bold" };
-
 export const EventPage = () => {
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const { events, users, categories } = useLoaderData();
   const { eventId } = useParams();
+  const { lastClickedEvent, setLastClickedEvent } = useContextData();
 
   const event = events.find((sEvent) => sEvent.id === parseInt(eventId));
   const user = users.find((user) => user.id === event.createdBy);
+
+  useEffect(() => {
+    const eventIdInt = parseInt(eventId, 10);
+    setLastClickedEvent(eventIdInt);
+    console.log("New lastClicked: ", lastClickedEvent);
+  }, [eventId, setLastClickedEvent]);
 
   const categoriesList = (categoryIds) => {
     return categoryIds.map((categoryId) => {
@@ -36,6 +50,20 @@ export const EventPage = () => {
     });
   };
 
+  const openForm = () => {
+    setIsFormVisible(true);
+    console.log("Form vissible");
+  };
+
+  const closeForm = () => {
+    setIsFormVisible(false);
+    console.log("Form closed");
+  };
+
+  const deleteEvent = () => {};
+
+  const boldTextStyle = { fontWeight: "bold" };
+
   return (
     <Box bg="blue.100">
       <Center>
@@ -43,14 +71,12 @@ export const EventPage = () => {
           <Box
             width="100%"
             bg="white"
-            borderWidth="2px"
             borderRadius="lg"
+            boxShadow="5px 5px 10px 5px rgba(0.4, 0.4, 0.4, 0.4)"
             overflow="hidden"
-            borderTopRadius={160}
-            mt="2"
           >
             <Center>
-              <Heading size="lg" mt="8" mb="2">
+              <Heading size="lg" mt="4" mb="2">
                 {event.title}
               </Heading>
             </Center>
@@ -60,10 +86,10 @@ export const EventPage = () => {
               mb="2"
               height="14rem"
               width="30rem"
-              borderTopRadius={40}
+              maxW="30rem"
             />
             <Center>
-              <Box mt="4">
+              <Box mt="4" textAlign="center">
                 <Text style={boldTextStyle}>Description:</Text>
                 <Text>{event.description}</Text>
                 <Text style={boldTextStyle}>Start Time:</Text>
@@ -76,6 +102,38 @@ export const EventPage = () => {
                 </Text>
                 <Text style={boldTextStyle}>Created by:</Text>
                 <Text>{user.name}</Text>
+                <Center>
+                  <Button
+                    position="fixed"
+                    mt={680}
+                    mr={80}
+                    bg="black"
+                    textColor="white"
+                    _hover={{
+                      textColor: "#007bff",
+                      bg: "black",
+                      transition: "color 1s, background-color 1s",
+                    }}
+                    onClick={openForm}
+                  >
+                    Edit event{" "}
+                  </Button>
+                  <Button
+                    position="fixed"
+                    mt={680}
+                    ml={80}
+                    bg="red"
+                    textColor="white"
+                    _hover={{
+                      textColor: "#007bff",
+                      bg: "black",
+                      transition: "color 1s, background-color 1s",
+                    }}
+                    onClick={deleteEvent}
+                  >
+                    Delete event{" "}
+                  </Button>
+                </Center>
               </Box>
             </Center>
             <Center>
