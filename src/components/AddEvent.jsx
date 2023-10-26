@@ -1,4 +1,4 @@
-import { Form, redirect } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { useState } from "react";
 import styles from "./AddEvent.module.css";
 

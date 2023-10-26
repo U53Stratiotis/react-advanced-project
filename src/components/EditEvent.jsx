@@ -8,11 +8,12 @@ import styles from "./EditEvent.module.css";
 
 export const EditEvent = ({ closeForm, categories, users, eventId }) => {
   const toast = useToast();
-  const statuses = ["success", "error", "warning", "info"];
 
+  // EventsData from fetchData
   const { events } = useContextData();
   const event = events.find((sEvent) => sEvent.id === eventId);
 
+  // States get set to initial fetchData
   const [title, setTitle] = useState(event.title);
   const [description, setDescription] = useState(event.description);
   const [image, setImage] = useState(event.image);
@@ -34,6 +35,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
     setCreatedBy(parseInt(e.target.value));
   };
 
+  // <<< Edit event button clicked >>>
   const handleSubmit = (e) => {
     e.preventDefault();
     const editEvent = {
@@ -48,24 +50,26 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
       endTime,
     };
 
-    const eventSuccesMessage = () => {
+    // Toasts
+    const editSuccesMessage = () => {
       toast({
-        title: "Event updated.",
-        description: "The event has been successfully updated.",
+        title: "Succes",
+        description: "The event has been updated.",
         status: "success",
-        duration: 100000,
+        position: "top",
       });
     };
 
-    const eventFailureMessage = () => {
+    const editErrorMessage = () => {
       toast({
-        title: "Update failed",
-        description: "Unable to edit event.",
+        title: "Unable to edit Event",
+        description: "Please make sure all requirements are met.",
         status: "error",
-        duration: 100000,
+        position: "top",
       });
     };
 
+    // Edithandler
     fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",
       body: JSON.stringify(editEvent),
@@ -74,14 +78,17 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
       .then(() => {
         console.log("event editted");
         closeForm();
-        eventSuccesMessage();
+        editSuccesMessage();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch(() => {
-        eventFailureMessage();
+        editErrorMessage();
       });
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 4000);
   };
 
   return (

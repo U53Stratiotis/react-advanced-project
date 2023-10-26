@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useParams, useNavigate } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
 import { EditEvent } from "../components/EditEvent";
+import { useToast } from "@chakra-ui/react";
 import {
   Heading,
   Box,
@@ -31,21 +32,31 @@ export const loader = async () => {
 
 export const EventPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const { events, users, categories } = useLoaderData();
-  const { eventId } = useParams();
-  const { filteredEvents, lastClickedEvent, setLastClickedEvent } =
-    useContextData();
 
-  const event = events.find((sEvent) => sEvent.id === parseInt(eventId));
+  // useLoaderData so the page can be refreshed.
+  const { events, users, categories } = useLoaderData();
+  // EventId gained from the router in main.jsx.
+  const { eventId } = useParams();
+  // Enables the event in navigation to route back to event.
+  const { lastClickedEvent, setLastClickedEvent } = useContextData();
+
+  const toast = useToast();
+  // Route user back to EventsPage upon deleting current event.
+  const navigate = useNavigate();
+  // TextStyle Form.
+  const boldTextStyle = { fontWeight: "bold" };
+
   // We use the createBy(id) property of the event that matched with the eventId url parameter.
+  const event = events.find((sEvent) => sEvent.id === parseInt(eventId));
   const user = users.find((user) => user.id === event.createdBy);
 
+  // set current event in lastClickedEvent state as an integer.
   useEffect(() => {
     const eventIdInt = parseInt(eventId, 10);
     setLastClickedEvent(eventIdInt);
-    console.log("New lastClicked: ", lastClickedEvent);
   }, [eventId, setLastClickedEvent]);
 
+  // Returns categories that match the ID. CategoryIds is obtained trough event object line 50.
   const categoriesList = (categoryIds) => {
     return categoryIds.map((categoryId) => {
       const category = categories.find((cat) => cat.id === categoryId);
@@ -61,9 +72,45 @@ export const EventPage = () => {
     setIsFormVisible(false);
   };
 
-  const deleteEvent = () => {};
+  // <<< Delete event button clicked >>>
+  const handleDelete = () => {
+    // Toasts
+    const warningMessage = () => {
+      toast({
+        title: "Warning",
+        description: "Are you sure you want to delete the event?",
+        status: "success",
+      });
+    };
 
-  const boldTextStyle = { fontWeight: "bold" };
+    const deleteSuccesMessage = () => {
+      toast({
+        title: "Succes",
+        description: "The event has been deleted.",
+        status: "success",
+      });
+    };
+
+    const deleteErrorMessage = () => {
+      toast({
+        title: "Error",
+        description: "Unable to delete event.",
+        status: "error",
+      });
+    };
+
+    // Deletehandler
+    fetch(`http://localhost:3000/events/${eventId}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        deleteSuccesMessage();
+        navigate("/");
+      })
+      .catch(() => {
+        deleteErrorMessage();
+      });
+  };
 
   return (
     <Box bg="blue.100">
@@ -143,7 +190,7 @@ export const EventPage = () => {
                     _hover={{
                       textColor: "red",
                     }}
-                    onClick={deleteEvent}
+                    onClick={handleDelete}
                   >
                     Delete event{" "}
                   </Button>

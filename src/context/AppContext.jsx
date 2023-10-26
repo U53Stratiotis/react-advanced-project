@@ -58,6 +58,7 @@ export const AppContextProvider = ({ children }) => {
   );
 };
 
+// We import useContext here so we only need to import useContextData elsewhere
 export const useContextData = () => {
   const context = useContext(AppContext);
   if (!context) {
