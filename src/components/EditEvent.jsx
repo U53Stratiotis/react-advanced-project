@@ -1,9 +1,15 @@
 import { Form, redirect } from "react-router-dom";
 import { useState } from "react";
 import { useContextData } from "../context/AppContext";
+import { useToast } from "@chakra-ui/react";
+
+// import { eventSuccesMessage } from "./EditEventHelpers";
 import styles from "./EditEvent.module.css";
 
 export const EditEvent = ({ closeForm, categories, users, eventId }) => {
+  const toast = useToast();
+  const statuses = ["success", "error", "warning", "info"];
+
   const { events } = useContextData();
   const event = events.find((sEvent) => sEvent.id === eventId);
 
@@ -42,15 +48,40 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
       endTime,
     };
 
+    const eventSuccesMessage = () => {
+      toast({
+        title: "Event updated.",
+        description: "The event has been successfully updated.",
+        status: "success",
+        duration: 100000,
+      });
+    };
+
+    const eventFailureMessage = () => {
+      toast({
+        title: "Update failed",
+        description: "Unable to edit event.",
+        status: "error",
+        duration: 100000,
+      });
+    };
+
     fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",
       body: JSON.stringify(editEvent),
       headers: { "Content-Type": "application/json" },
-    }).then(() => {
-      console.log("event editted");
-      closeForm();
+    })
+      .then(() => {
+        console.log("event editted");
+        closeForm();
+        eventSuccesMessage();
+      })
+      .catch(() => {
+        eventFailureMessage();
+      });
+    setTimeout(() => {
       window.location.reload();
-    });
+    }, 2000);
   };
 
   return (
