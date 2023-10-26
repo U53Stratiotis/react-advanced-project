@@ -1,7 +1,7 @@
 import { Form, redirect } from "react-router-dom";
 import { useState } from "react";
 import { useContextData } from "../context/AppContext";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Center, Heading } from "@chakra-ui/react";
 
 // import { eventSuccesMessage } from "./EditEventHelpers";
 import styles from "./EditEvent.module.css";
@@ -95,6 +95,9 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
         <Form method="patch" onSubmit={handleSubmit}>
+          <Center>
+            <Heading>Edit Event</Heading>
+          </Center>
           <label className={styles.titleContainer}>
             <span>Title</span>
             <input
@@ -186,7 +189,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
               onClick={handleSubmit}
               className={styles.saveButton}
             >
-              Save
+              Confirm
             </button>
             <button onClick={closeForm} className={styles.closeButton}>
               Close

@@ -1,5 +1,6 @@
 import { Form } from "react-router-dom";
 import { useState } from "react";
+import { Center, Heading } from "@chakra-ui/react";
 import styles from "./AddEvent.module.css";
 
 export const AddEvent = ({ closeForm, categories, users }) => {
@@ -50,6 +51,9 @@ export const AddEvent = ({ closeForm, categories, users }) => {
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
         <Form method="post" onSubmit={handleSubmit}>
+          <Center>
+            <Heading>Add Event</Heading>
+          </Center>
           <label className={styles.titleContainer}>
             <span>Title</span>
             <input

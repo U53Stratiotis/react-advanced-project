@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLoaderData, useParams, useNavigate } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
 import { EditEvent } from "../components/EditEvent";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Wrap } from "@chakra-ui/react";
 import {
   Heading,
   Box,
@@ -33,6 +33,7 @@ export const loader = async () => {
 
 export const EventPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isWarningVisible, setIsWarningVisible] = useState(false);
 
   // useLoaderData so the page can be refreshed.
   const { events, users, categories } = useLoaderData();
@@ -73,47 +74,63 @@ export const EventPage = () => {
     setIsFormVisible(false);
   };
 
+  // Toasts
+  const warningMessage = () => {
+    toast({
+      title: "Confirm",
+      description: "Are you sure you want to delete this event?",
+      status: "warning",
+      position: "top",
+      duration: 1500,
+      isClosable: false,
+    });
+  };
+
+  const deleteSuccesMessage = () => {
+    toast({
+      title: "Succes",
+      description: "The event has been deleted.",
+      position: "top",
+      status: "success",
+    });
+  };
+
+  const deleteErrorMessage = () => {
+    toast({
+      title: "Error",
+      description: "Unable to delete event.",
+      position: "top",
+      status: "error",
+      duration: 1500,
+    });
+  };
+
   // <<< Delete event button clicked >>>
+  const deleteEvent = () => {
+    warningMessage();
+    setIsWarningVisible(true);
+  };
+
+  const closeWarningMessage = () => {
+    toast.closeAll();
+    setIsWarningVisible(false);
+  };
+
+  // Deletehandler
   const handleDelete = () => {
-    // Toasts
-    const warningMessage = () => {
-      toast({
-        title: "Warning",
-        description: "Are you sure you want to delete the event?",
-        status: "success",
-      });
-    };
-
-    const deleteSuccesMessage = () => {
-      toast({
-        title: "Succes",
-        description: "The event has been deleted.",
-        status: "success",
-      });
-    };
-
-    const deleteErrorMessage = () => {
-      toast({
-        title: "Error",
-        description: "Unable to delete event.",
-        status: "error",
-      });
-    };
-
-    // Deletehandler
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
     })
       .then(() => {
         deleteSuccesMessage();
+        navigate("/");
       })
       .catch(() => {
         deleteErrorMessage();
       });
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
-    navigate("/");
+    }, 2000);
   };
 
   return (
@@ -122,8 +139,7 @@ export const EventPage = () => {
         <Modal
           isOpen={isFormVisible}
           onClose={closeForm}
-          position="absolute"
-          marginRight="20rem"
+          // position="absolute"
         >
           <EditEvent
             closeForm={closeForm}
@@ -133,6 +149,30 @@ export const EventPage = () => {
           />
         </Modal>
       )}
+
+      <Box position="relative">
+        {isWarningVisible && (
+          <Flex
+            position="absolute"
+            top="570"
+            left="880"
+            // bottom="10"
+            justify="center"
+            align="center"
+            // bg="rgba(255, 255, 255, 0.5)"
+          >
+            <Box>
+              <Button bg="red" size="lg" onClick={handleDelete}>
+                YES
+              </Button>{" "}
+              <Button bg="green" size="lg" onClick={closeWarningMessage}>
+                NO{" "}
+              </Button>
+            </Box>
+          </Flex>
+        )}
+      </Box>
+
       <Center>
         <Flex height="95vh">
           <Box
@@ -194,7 +234,7 @@ export const EventPage = () => {
                     _hover={{
                       textColor: "red",
                     }}
-                    onClick={handleDelete}
+                    onClick={deleteEvent}
                   >
                     Delete event{" "}
                   </Button>
