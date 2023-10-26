@@ -130,7 +130,7 @@ export const EventPage = () => {
       });
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 1000);
   };
 
   return (

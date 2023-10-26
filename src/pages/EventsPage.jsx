@@ -59,11 +59,6 @@ export const EventsPage = () => {
     </Center>
   ));
 
-  // const noMatchesMessage =
-  //   searchText && eventGrid.length === 0 ? (
-  //     <p className={styles.noMatchesMessage}>No matches found.</p>
-  //   ) : null;
-
   return (
     <>
       <Box bg="blue.100" height="auto" minHeight="95vh" padding={8}>
@@ -89,7 +84,6 @@ export const EventsPage = () => {
             templateColumns="repeat(2, 1fr)"
             gap={4}
           >
-            {/* {noMatchesMessage} */}
             {eventGrid}
           </Grid>
         </Box>
