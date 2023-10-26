@@ -83,7 +83,7 @@ export const EventsPage = () => {
             Add event{" "}
           </Button>
         </Center>
-        <Box>
+        <Box height="100vh">
           <Grid
             className={styles.gridContainer}
             templateColumns="repeat(2, 1fr)"

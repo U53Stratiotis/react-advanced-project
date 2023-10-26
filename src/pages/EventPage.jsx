@@ -156,10 +156,8 @@ export const EventPage = () => {
             position="absolute"
             top="570"
             left="880"
-            // bottom="10"
             justify="center"
             align="center"
-            // bg="rgba(255, 255, 255, 0.5)"
           >
             <Box>
               <Button bg="red" size="lg" onClick={handleDelete}>
