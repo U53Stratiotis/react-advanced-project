@@ -138,12 +138,10 @@ export const EventPage = () => {
                     position="fixed"
                     mt={680}
                     ml={80}
-                    bg="red"
+                    bg="black"
                     textColor="white"
                     _hover={{
-                      textColor: "#007bff",
-                      bg: "black",
-                      transition: "color 1s, background-color 1s",
+                      textColor: "red",
                     }}
                     onClick={deleteEvent}
                   >
