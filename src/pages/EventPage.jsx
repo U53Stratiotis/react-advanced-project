@@ -13,6 +13,7 @@ import {
   Button,
   Modal,
 } from "@chakra-ui/react";
+import styles from "./EventPage.module.css";
 
 export const loader = async () => {
   const events = await fetch(`http://localhost:3000/events`);
@@ -105,11 +106,14 @@ export const EventPage = () => {
     })
       .then(() => {
         deleteSuccesMessage();
-        navigate("/");
       })
       .catch(() => {
         deleteErrorMessage();
       });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+    navigate("/");
   };
 
   return (
