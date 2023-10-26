@@ -59,14 +59,14 @@ export const EventsPage = () => {
     </Center>
   ));
 
-  const noMatchesMessage =
-    searchText && eventGrid.length === 0 ? (
-      <p className={styles.noMatchesMessage}>No matches found.</p>
-    ) : null;
+  // const noMatchesMessage =
+  //   searchText && eventGrid.length === 0 ? (
+  //     <p className={styles.noMatchesMessage}>No matches found.</p>
+  //   ) : null;
 
   return (
     <>
-      <Box bg="blue.100">
+      <Box bg="blue.100" height="auto" minHeight="95vh" padding={8}>
         <Center>
           <Button
             position="fixed"
@@ -83,14 +83,13 @@ export const EventsPage = () => {
             Add event{" "}
           </Button>
         </Center>
-        <Box height="100vh">
+        <Box>
           <Grid
             className={styles.gridContainer}
             templateColumns="repeat(2, 1fr)"
             gap={4}
-            mt={20}
           >
-            {noMatchesMessage}
+            {/* {noMatchesMessage} */}
             {eventGrid}
           </Grid>
         </Box>
