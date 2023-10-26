@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
-// import { EditEvent} from "../components/EditEvent";
+import { EditEvent } from "../components/EditEvent";
 import {
   Heading,
   Box,
@@ -10,6 +10,7 @@ import {
   Flex,
   Center,
   Button,
+  Modal,
 } from "@chakra-ui/react";
 
 export const loader = async () => {
@@ -32,9 +33,11 @@ export const EventPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const { events, users, categories } = useLoaderData();
   const { eventId } = useParams();
-  const { lastClickedEvent, setLastClickedEvent } = useContextData();
+  const { filteredEvents, lastClickedEvent, setLastClickedEvent } =
+    useContextData();
 
   const event = events.find((sEvent) => sEvent.id === parseInt(eventId));
+  // We use the createBy(id) property of the event that matched with the eventId url parameter.
   const user = users.find((user) => user.id === event.createdBy);
 
   useEffect(() => {
@@ -52,12 +55,10 @@ export const EventPage = () => {
 
   const openForm = () => {
     setIsFormVisible(true);
-    console.log("Form vissible");
   };
 
   const closeForm = () => {
     setIsFormVisible(false);
-    console.log("Form closed");
   };
 
   const deleteEvent = () => {};
@@ -66,6 +67,21 @@ export const EventPage = () => {
 
   return (
     <Box bg="blue.100">
+      {isFormVisible && (
+        <Modal
+          isOpen={isFormVisible}
+          onClose={closeForm}
+          position="absolute"
+          marginRight="20rem"
+        >
+          <EditEvent
+            closeForm={closeForm}
+            categories={categories}
+            users={users}
+            eventId={event.id}
+          />
+        </Modal>
+      )}
       <Center>
         <Flex height="95vh">
           <Box

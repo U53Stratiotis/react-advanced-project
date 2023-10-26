@@ -1,24 +1,31 @@
 import { Form, redirect } from "react-router-dom";
 import { useState } from "react";
-import styles from "./AddEvent.module.css";
+import { useContextData } from "../context/AppContext";
+import styles from "./EditEvent.module.css";
 
-export const AddEvent = ({ closeForm, categories, users }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [categoryIds, setCategoryIds] = useState([]);
-  const [id, setId] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [location, setLocation] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+export const EditEvent = ({ closeForm, categories, users, eventId }) => {
+  const { events } = useContextData();
+  const event = events.find((sEvent) => sEvent.id === eventId);
+
+  const [title, setTitle] = useState(event.title);
+  const [description, setDescription] = useState(event.description);
+  const [image, setImage] = useState(event.image);
+  const [categoryIds, setCategoryIds] = useState(event.categoryIds);
+  const [id, setId] = useState(event.id);
+  const [createdBy, setCreatedBy] = useState(event.createdBy);
+  const [location, setLocation] = useState(event.location);
+  const [startTime, setStartTime] = useState(event.startTime);
+  const [endTime, setEndTime] = useState(event.endTime);
 
   const handleCategoryChange = (e) => {
-    const selectedCategoryIds = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
+    const selectedCategoryIds = Array.from(e.target.selectedOptions, (option) =>
+      parseInt(option.value)
     );
     setCategoryIds(selectedCategoryIds);
+  };
+
+  const handleCreatedByChange = (e) => {
+    setCreatedBy(parseInt(e.target.value));
   };
 
   const handleSubmit = (e) => {
@@ -35,7 +42,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
       endTime,
     };
 
-    fetch("http://localhost:3000/events${id}", {
+    fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",
       body: JSON.stringify(editEvent),
       headers: { "Content-Type": "application/json" },
@@ -49,12 +56,13 @@ export const AddEvent = ({ closeForm, categories, users }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
-        <Form method="post" onSubmit={handleSubmit}>
+        <Form method="patch" onSubmit={handleSubmit}>
           <label className={styles.titleContainer}>
             <span>Title</span>
             <input
               name="title"
               maxLength="20"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
@@ -64,6 +72,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
               name="description"
               rows="2"
               maxLength="35"
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
@@ -72,6 +81,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <input
               name="imgUrl"
               type="url"
+              value={image}
               onChange={(e) => setImage(e.target.value)}
             />
           </label>
@@ -80,6 +90,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <select
               name="categoriesId"
               multiple
+              value={categoryIds}
               onChange={handleCategoryChange}
             >
               {categories.map((cat) => (
@@ -93,7 +104,8 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Author</span>
             <select
               name="userId"
-              onChange={(e) => setCreatedBy(parseInt(e.target.value))}
+              value={createdBy}
+              onChange={handleCreatedByChange}
             >
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
@@ -108,6 +120,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
               name="location"
               rows="1"
               maxLength="40"
+              value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
           </label>
@@ -116,6 +129,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <input
               name="date"
               type="datetime-local"
+              value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
             />
           </label>
@@ -124,6 +138,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <input
               name="date"
               type="datetime-local"
+              value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
             />
           </label>

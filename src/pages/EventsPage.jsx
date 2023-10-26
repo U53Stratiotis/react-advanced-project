@@ -15,16 +15,15 @@ import styles from "./EventsPage.module.css";
 
 export const EventsPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const { filteredEvents, users, categories, searchText } = useContextData();
+  const { events, filteredEvents, users, categories, searchText } =
+    useContextData();
 
   const openForm = () => {
     setIsFormVisible(true);
-    console.log("Form vissible");
   };
 
   const closeForm = () => {
     setIsFormVisible(false);
-    console.log("Form closed");
   };
 
   const categoriesList = (categoryIds) => {
@@ -35,7 +34,7 @@ export const EventsPage = () => {
   };
 
   // Add the following details when displaying an event: title, description, image, startTime & endTime, categories
-  const eventGrid = filteredEvents.map((event) => (
+  const eventGrid = events.map((event) => (
     <Center key={event.id}>
       <div className={styles.cards}>
         <GridItem key={event.id} className="event" colSpan={1} rowSpan={1}>

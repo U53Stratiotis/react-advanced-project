@@ -1,11 +1,25 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
 
 import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
-  const { filterEvents, setSearchText, lastClickedEvent } = useContextData();
+  const {
+    events,
+    searchText,
+    setSearchText,
+    setFilteredEvents,
+    lastClickedEvent,
+  } = useContextData();
+
+  const filterEvents = () => {
+    const filteredData = events?.filter((event) =>
+      event?.title?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredEvents(filteredData);
+    return filteredData;
+  };
 
   const handleSearchChange = (e) => {
     const searchTerm = e.target.value.toLowerCase();

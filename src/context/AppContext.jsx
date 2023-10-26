@@ -20,8 +20,8 @@ export const fetchData = async () => {
 
 export const AppContextProvider = ({ children }) => {
   const [searchText, setSearchText] = useState("");
-  const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState();
   const [users, setUsers] = useState();
   const [lastClickedEvent, setLastClickedEvent] = useState(false);
@@ -29,22 +29,14 @@ export const AppContextProvider = ({ children }) => {
   useEffect(() => {
     fetchData().then((data) => {
       setEvents(data.events);
-      setFilteredEvents(data.events);
+      // setFilteredEvents(data.events);
       setCategories(data.categories);
       setUsers(data.users);
     });
   }, []);
 
-  const filterEvents = () => {
-    const filteredData = filteredEvents?.filter((event) =>
-      event?.title?.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    // console.log(filteredData);
-    setFilteredEvents(filteredData);
-    return filteredData;
-  };
-
+  // Find a way to render filteredEvents based on name in both directions. useEffect needs clean up function on filteredEvents
+  // Find a way to render events based on category.
   return (
     <AppContext.Provider
       value={{
@@ -57,7 +49,6 @@ export const AppContextProvider = ({ children }) => {
         setUsers,
         categories,
         setCategories,
-        filterEvents,
         lastClickedEvent,
         setLastClickedEvent,
       }}
