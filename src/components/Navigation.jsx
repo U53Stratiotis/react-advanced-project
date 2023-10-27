@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
 
@@ -13,10 +12,12 @@ export const Navigation = () => {
     lastClickedEvent,
   } = useContextData();
 
+  // Find a way to render FilteredEvents on the EventsPage.
   const filterEvents = () => {
     const filteredData = events?.filter((event) =>
       event?.title?.toLowerCase().includes(searchText.toLowerCase())
     );
+    console.log(filteredData);
     setFilteredEvents(filteredData);
     return filteredData;
   };

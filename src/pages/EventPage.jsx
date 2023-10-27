@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLoaderData, useParams, useNavigate } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
 import { EditEvent } from "../components/EditEvent";
-import { useToast, Wrap } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import {
   Heading,
   Box,
@@ -13,7 +13,6 @@ import {
   Button,
   Modal,
 } from "@chakra-ui/react";
-import styles from "./EventPage.module.css";
 
 export const loader = async () => {
   const events = await fetch(`http://localhost:3000/events`);
@@ -136,11 +135,7 @@ export const EventPage = () => {
   return (
     <Box bg="blue.100">
       {isFormVisible && (
-        <Modal
-          isOpen={isFormVisible}
-          onClose={closeForm}
-          // position="absolute"
-        >
+        <Modal isOpen={isFormVisible} onClose={closeForm}>
           <EditEvent
             closeForm={closeForm}
             categories={categories}

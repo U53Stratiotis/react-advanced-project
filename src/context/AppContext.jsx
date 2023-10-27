@@ -35,6 +35,7 @@ export const AppContextProvider = ({ children }) => {
     });
   }, []);
 
+  console.log(searchText);
   // Find a way to render filteredEvents based on name in both directions. useEffect needs clean up function on filteredEvents
   // Find a way to render events based on category.
   return (
