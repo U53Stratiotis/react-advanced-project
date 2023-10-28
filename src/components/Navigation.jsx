@@ -4,6 +4,7 @@ import { useContextData } from "../context/AppContext";
 import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
+  // Conside changing setFilteredEvents . setEvents, import setEvents, change APP output. Change filteredEvents render in EventsPage
   const { events, setFilteredEvents, lastClickedEvent } = useContextData();
 
   const handleSearchChange = (e) => {

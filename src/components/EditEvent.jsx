@@ -67,6 +67,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
       });
     };
 
+    // Consider changing this to a action to prevent window.location.reload
     // Post editted event to server
     fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",

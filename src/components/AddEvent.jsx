@@ -116,6 +116,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           endTime,
         };
 
+        // Consider placing a action to prevent window.location.reload
         // Post new event to server
         fetch("http://localhost:3000/events", {
           method: "POST",
