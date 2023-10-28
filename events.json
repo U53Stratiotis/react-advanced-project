@@ -67,51 +67,16 @@
     },
     {
       "id": 5,
-      "createdBy": "",
-      "title": "",
-      "description": "fd",
-      "image": "",
-      "categoryIds": [],
-      "location": "",
-      "startTime": "",
-      "endTime": ""
-    },
-    {
-      "id": 6,
-      "createdBy": "",
-      "title": "",
-      "description": "",
-      "image": "",
-      "categoryIds": [],
-      "location": "",
-      "startTime": "",
-      "endTime": ""
-    },
-    {
-      "id": 7,
-      "createdBy": "",
-      "title": "afdsdfasdasfaf",
-      "description": "adsfaddfsafasfasfsafsafsfsfsdfsfssf",
+      "createdBy": 2,
+      "title": "EUREKAAAAAA",
+      "description": "IM TIRED AFFFF 0638",
       "image": "https://plus.unsplash.com/premium_photo-1679750867619-6f6e57fc8762?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "categoryIds": [
-        "2"
+        3
       ],
-      "location": "Rotterdamstadnnederland",
-      "startTime": "2023-10-28T11:12",
-      "endTime": "2023-10-30T06:18"
-    },
-    {
-      "id": 8,
-      "createdBy": "",
-      "title": "dddddddddddddddddddd",
-      "description": "faddddddddddddddddddddddddddddddddd",
-      "image": "https://plus.unsplash.com/premium_photo-1679750867619-6f6e57fc8762?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "categoryIds": [
-        "2"
-      ],
-      "location": "dddddddddddddddddddddddddddddddddddddddd",
-      "startTime": "2023-10-28T06:19",
-      "endTime": "2023-10-31T12:13"
+      "location": "fadfasfsadfsdasafdsfdasdfaadfsfd",
+      "startTime": "2023-10-28T12:44",
+      "endTime": "2023-11-02T12:44"
     }
   ],
   "categories": [

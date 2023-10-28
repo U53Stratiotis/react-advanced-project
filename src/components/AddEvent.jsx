@@ -17,11 +17,17 @@ export const AddEvent = ({ closeForm, categories, users }) => {
   const [endTime, setEndTime] = useState("");
 
   const handleCategoryChange = (e) => {
-    const selectedCategoryIds = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
+    const selectedCategoryIds = Array.from(e.target.selectedOptions, (option) =>
+      // change category from string to interger
+      parseInt(option.value)
     );
     setCategoryIds(selectedCategoryIds);
+  };
+
+  const handleAuthorChange = (e) => {
+    const selectedAuthorId = parseInt(e.target.value);
+    // change category from string to interger
+    setCreatedBy(selectedAuthorId);
   };
 
   function isValidURL(url) {
@@ -55,7 +61,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           position: "top",
         });
         break;
-      case image.length > 0 && !isValidURL(image):
+      case image.length === 0 || !isValidURL(image):
         toast({
           title: "Invalid URL",
           description: "Please enter a valid URL for the image.",
@@ -174,11 +180,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           </label>
           <label>
             <span>Author</span>
-            <select
-              name="userId"
-              required
-              onChange={(e) => setCreatedBy(parseInt(e.target.value))}
-            >
+            <select name="userId" required onChange={handleAuthorChange}>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -195,7 +197,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
               required
               onChange={(e) => setLocation(e.target.value)}
             />
-            {console.log(location)};
           </label>
           <label>
             <span className={styles.startTimeMargin}>Start time:</span>
