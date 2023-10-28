@@ -4,31 +4,16 @@ import { useContextData } from "../context/AppContext";
 import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
-  const {
-    events,
-    searchText,
-    setSearchText,
-    setFilteredEvents,
-    lastClickedEvent,
-  } = useContextData();
-
-  // Find a way to render FilteredEvents on the EventsPage.
-  const filterEvents = () => {
-    const filteredData = events?.filter((event) =>
-      event?.title?.toLowerCase().includes(searchText.toLowerCase())
-    );
-    console.log(filteredData);
-    setFilteredEvents(filteredData);
-    return filteredData;
-  };
+  const { events, setFilteredEvents, lastClickedEvent } = useContextData();
 
   const handleSearchChange = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    setSearchText(searchTerm);
-    filterEvents();
+    // Dont update seperate states to avoid asynchronous state bugs.
+    setFilteredEvents(
+      events.filter((event) =>
+        event?.title?.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
-
-  const eventLinkPath = lastClickedEvent ? `/event/${lastClickedEvent}` : "/";
 
   return (
     <nav className={styles.navContainer}>
@@ -46,7 +31,9 @@ export const Navigation = () => {
           />
         </div>
         <li>
-          <Link to={eventLinkPath}>Event</Link>
+          <Link to={lastClickedEvent ? `/event/${lastClickedEvent}` : "/"}>
+            Event
+          </Link>
         </li>
       </ul>
     </nav>

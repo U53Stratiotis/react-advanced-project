@@ -8,15 +8,33 @@ import {
   GridItem,
   Button,
   Modal,
+  Select,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter, faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./EventsPage.module.css";
 
 export const EventsPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const { events, filteredEvents, users, categories, searchText } =
+  const [showCategories, setShowCategories] = useState(false);
+  const { events, filteredEvents, users, categories, setFilteredCategoryIds } =
     useContextData();
+
+  const toggleCategories = () => {
+    setShowCategories(!showCategories);
+  };
+
+  // Function to handle category selection (you can implement this part)
+  const handleFilteredCategoryChange = (event) => {
+    // Implement your filtering logic here
+    const selectedCategoryIds = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setFilteredCategoryIds(selectedCategoryIds);
+  };
 
   const openForm = () => {
     setIsFormVisible(true);
@@ -34,7 +52,7 @@ export const EventsPage = () => {
   };
 
   // Add the following details when displaying an event: title, description, image, startTime & endTime, categories
-  const eventGrid = events.map((event) => (
+  const eventGrid = filteredEvents.map((event) => (
     <Center key={event.id}>
       <div className={styles.cards}>
         <GridItem key={event.id} className="event" colSpan={1} rowSpan={1}>
@@ -66,6 +84,7 @@ export const EventsPage = () => {
           <Button
             position="fixed"
             mt={20}
+            mr={40}
             bg="white"
             textColor="black"
             _hover={{
@@ -75,8 +94,54 @@ export const EventsPage = () => {
             }}
             onClick={openForm}
           >
+            <FontAwesomeIcon icon={faPlus} style={{ marginRight: "8px" }} />
             Add event{" "}
           </Button>
+          <Button
+            position="fixed"
+            mt={20}
+            ml={40}
+            bg="white"
+            textColor="black"
+            _hover={{
+              textColor: "blue.100",
+              bg: "black",
+              transition: "color 1s, background-color 1s",
+            }}
+            onClick={toggleCategories}
+          >
+            <FontAwesomeIcon icon={faFilter} style={{ marginRight: "8px" }} />
+            Categories
+          </Button>
+          <Box mt={300} position="fixed" width={200}>
+            {showCategories && (
+              <>
+                <span>
+                  CTRL + click
+                  <select
+                    name="categoriesId"
+                    multiple
+                    onChange={handleFilteredCategoryChange}
+                    style={{
+                      borderWidth: "0.0rem",
+                      height: "8.5rem",
+                      fontSize: "2rem",
+                      overflow: "hidden", // Hide the scrollbar by clipping content
+                      scrollbarWidth: "none", // For Firefox & Chrome
+                      WebkitScrollbarWidth: "none",
+                      background: "transparent",
+                    }}
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </span>
+              </>
+            )}
+          </Box>
         </Center>
         <Box>
           <Grid
