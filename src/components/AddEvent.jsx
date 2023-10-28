@@ -1,9 +1,11 @@
 import { Form } from "react-router-dom";
 import { useState } from "react";
-import { Center, Heading } from "@chakra-ui/react";
+import { Center, Heading, useToast } from "@chakra-ui/react";
 import styles from "./AddEvent.module.css";
 
 export const AddEvent = ({ closeForm, categories, users }) => {
+  const toast = useToast();
+  // States get set from the form input
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -22,32 +24,106 @@ export const AddEvent = ({ closeForm, categories, users }) => {
     setCategoryIds(selectedCategoryIds);
   };
 
+  function isValidURL(url) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  // <<< Save event button clicked >>>
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEvent = {
-      id,
-      createdBy,
-      title,
-      description,
-      image,
-      categoryIds,
-      location,
-      startTime,
-      endTime,
-    };
 
-    fetch("http://localhost:3000/events", {
-      method: "POST",
-      body: JSON.stringify(newEvent),
-      headers: { "Content-Type": "application/json" },
-    }).then(() => {
-      console.log("new event added");
-      closeForm();
-      window.location.reload();
-    });
+    // Form validation
+    switch (true) {
+      case title.length < 3:
+        toast({
+          title: "Invalid Title",
+          description: "Minimum title of 3",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case description.length < 15:
+        toast({
+          title: "Invalid description",
+          description: "Minimum description of 15",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case image.length > 0 && !isValidURL(image):
+        toast({
+          title: "Invalid URL",
+          description: "Please enter a valid URL for the image.",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case categoryIds.length < 1:
+        toast({
+          title: "Insuficient categories",
+          description: "Please select at least one category.",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case location.length < 3:
+        toast({
+          title: "Unkown location",
+          description: "Please enter a adress with the city.",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case startTime.length === 0:
+        toast({
+          title: "Start time",
+          description: "Please enter a date and time",
+          status: "warning",
+          position: "top",
+        });
+        break;
+      case endTime.length === 0:
+        toast({
+          title: "End time",
+          description: "Please enter a date and time",
+          status: "warning",
+          position: "top",
+        });
+        break;
+
+      default:
+        // Form validation complete > Places states in newEvent
+        const newEvent = {
+          id,
+          createdBy,
+          title,
+          description,
+          image,
+          categoryIds,
+          location,
+          startTime,
+          endTime,
+        };
+
+        // Post new event to server
+        fetch("http://localhost:3000/events", {
+          method: "POST",
+          body: JSON.stringify(newEvent),
+          headers: { "Content-Type": "application/json" },
+        }).then(() => {
+          closeForm();
+          window.location.reload();
+        });
+    }
   };
 
   return (
+    // Form input to setStates
     <div className={styles.modalOverlay}>
       <div className={styles.newPost}>
         <Form method="post" onSubmit={handleSubmit}>
@@ -59,6 +135,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <input
               name="title"
               maxLength="20"
+              required
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
@@ -68,6 +145,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
               name="description"
               rows="2"
               maxLength="35"
+              required
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
@@ -84,6 +162,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <select
               name="categoriesId"
               multiple
+              required
               onChange={handleCategoryChange}
             >
               {categories.map((cat) => (
@@ -97,6 +176,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Author</span>
             <select
               name="userId"
+              required
               onChange={(e) => setCreatedBy(parseInt(e.target.value))}
             >
               {users.map((user) => (
@@ -112,8 +192,10 @@ export const AddEvent = ({ closeForm, categories, users }) => {
               name="location"
               rows="1"
               maxLength="40"
+              required
               onChange={(e) => setLocation(e.target.value)}
             />
+            {console.log(location)};
           </label>
           <label>
             <span className={styles.startTimeMargin}>Start time:</span>

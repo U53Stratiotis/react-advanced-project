@@ -2,8 +2,6 @@ import { Form } from "react-router-dom";
 import { useState } from "react";
 import { useContextData } from "../context/AppContext";
 import { useToast, Center, Heading } from "@chakra-ui/react";
-
-// import { eventSuccesMessage } from "./EditEventHelpers";
 import styles from "./EditEvent.module.css";
 
 export const EditEvent = ({ closeForm, categories, users, eventId }) => {
@@ -69,7 +67,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
       });
     };
 
-    // Edithandler
+    // Post editted event to server
     fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",
       body: JSON.stringify(editEvent),
