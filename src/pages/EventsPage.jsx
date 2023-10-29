@@ -100,14 +100,6 @@ export const EventsPage = () => {
     </Center>
   );
 
-  const easterEggMessage = (
-    <Center>
-      <Text mt={500} fontSize="xl" fontWeight="bold" textDecoration="underline">
-        You are funny
-      </Text>
-    </Center>
-  );
-
   return (
     <>
       <Box bg="blue.100" height="auto" minHeight="95vh" padding={8}>
@@ -176,7 +168,6 @@ export const EventsPage = () => {
           </Box>
         </Center>
         <Box>
-          {/* Conditionally render the message or eventGrid */}
           {eventGrid.length === 0 ? (
             noMatchesMessage
           ) : (

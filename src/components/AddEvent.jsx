@@ -121,7 +121,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           startTime,
           endTime,
         };
-
         // Consider placing a action to prevent window.location.reload
         // Post new event to server
         fetch("http://localhost:3000/events", {
@@ -190,8 +189,13 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           </label>
           <label>
             <span>Author</span>
-            <select name="userId" required onChange={handleAuthorChange}>
-              <option value="" disabled selected>
+            <select
+              name="userId"
+              value={createdBy}
+              required
+              onChange={handleAuthorChange}
+            >
+              <option value="" disabled>
                 Select an author
               </option>
               {users.map((user) => (

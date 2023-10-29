@@ -66,30 +66,69 @@
       "endTime": "2023-03-09T07:00:00.000Z"
     },
     {
-      "id": 5,
-      "createdBy": 2,
-      "title": "Test ID",
-      "description": "Can I remove ID STATE",
-      "image": "https://www.mediabistro.com/wp-content/uploads/2014/09/best-selling-author.jpg",
-      "categoryIds": [
-        2
-      ],
-      "location": "Buizerd SPijkenisse",
-      "startTime": "2023-10-29T00:58",
-      "endTime": "2023-11-06T18:58"
-    },
-    {
-      "id": 6,
-      "createdBy": 2,
-      "title": "ID TEST 2",
-      "description": "I think it automaticly makes one",
+      "createdBy": 1,
+      "title": "Event Added",
+      "description": "Testing the vent added toast",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
       "categoryIds": [
         2
       ],
-      "location": "Bujizerd spijk",
-      "startTime": "2023-10-29T00:59",
-      "endTime": "2023-11-08T18:04"
+      "location": "Buizerdhoek Spijk",
+      "startTime": "2023-10-29T00:24",
+      "endTime": "2023-11-02T19:30",
+      "id": 5
+    },
+    {
+      "createdBy": 1,
+      "title": "Event aded test",
+      "description": "afdsfsafsafsadfsadfasf",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Buiezrd rotterda",
+      "startTime": "2023-10-29T01:26",
+      "endTime": "2023-10-29T00:32",
+      "id": 6
+    },
+    {
+      "createdBy": 1,
+      "title": "eawrereawrawefe",
+      "description": "awesffsesfdsdfasdafasdffsdasfdadsaf",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "afafdsrtewarwraawrawww",
+      "startTime": "2023-10-29T00:26",
+      "endTime": "2023-11-01T19:31",
+      "id": 7
+    },
+    {
+      "createdBy": 1,
+      "title": "daffsdsdafsdafasdfdf",
+      "description": "fsdafdsadfaafdsdfssfad",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "aefdfsasadffdssadffasdsdfasdfa",
+      "startTime": "2023-10-29T01:26",
+      "endTime": "2023-10-29T19:31",
+      "id": 8
+    },
+    {
+      "createdBy": 1,
+      "title": "eawwrwrewrweerwrew",
+      "description": "rgatraewtrwetrewattea",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "4q53454agasfgsadfadsfas",
+      "startTime": "2023-10-29T19:34",
+      "endTime": "2023-11-03T19:34",
+      "id": 9
     }
   ],
   "categories": [
