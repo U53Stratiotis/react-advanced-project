@@ -31,7 +31,6 @@ export const EventsPage = () => {
     setShowCategories(!showCategories);
   };
 
-  // Function to handle category selection (you can implement this part)
   const handleFilteredCategoryChange = (e) => {
     const selectedCategoryIds = Array.from(e.target.selectedOptions, (option) =>
       // change category from string to interger
@@ -55,7 +54,7 @@ export const EventsPage = () => {
     });
   };
 
-  // Add the following details when displaying an event: title, description, image, startTime & endTime, categories
+  // Renders event display: title, description, image, startTime & endTime, categories
   const eventGrid = filteredEvents
     .filter((event) => {
       // Filter events only if there are selected category options

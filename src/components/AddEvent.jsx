@@ -1,5 +1,6 @@
 import { Form } from "react-router-dom";
 import { useState } from "react";
+import { validateForm } from "./eventValidation";
 import { Center, Heading, useToast } from "@chakra-ui/react";
 import styles from "./AddEvent.module.css";
 
@@ -42,95 +43,108 @@ export const AddEvent = ({ closeForm, categories, users }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Form validation
-    switch (true) {
-      case title.length < 3:
-        toast({
-          title: "Invalid Title",
-          description: "Minimum title of 3",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case description.length < 15:
-        toast({
-          title: "Invalid description",
-          description: "Minimum description of 15",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case image.length === 0 || !isValidURL(image):
-        toast({
-          title: "Invalid URL",
-          description: "Please enter a valid URL for the image.",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case categoryIds.length < 1:
-        toast({
-          title: "Insuficient categories",
-          description: "Please select at least one category.",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case createdBy.length === 0:
-        toast({
-          title: "No author",
-          description: "Please select an author",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case location.length < 3:
-        toast({
-          title: "Unkown location",
-          description: "Please enter a adress with the city.",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case startTime.length === 0:
-        toast({
-          title: "Start time",
-          description: "Please enter a date and time",
-          status: "warning",
-          position: "top",
-        });
-        break;
-      case endTime.length === 0:
-        toast({
-          title: "End time",
-          description: "Please enter a date and time",
-          status: "warning",
-          position: "top",
-        });
-        break;
+    // // Form validation
+    // switch (true) {
+    //   case title.length < 3:
+    //     toast({
+    //       title: "Invalid Title",
+    //       description: "Minimum title of 3",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case description.length < 15:
+    //     toast({
+    //       title: "Invalid description",
+    //       description: "Minimum description of 15",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case image.length === 0 || !isValidURL(image):
+    //     toast({
+    //       title: "Invalid URL",
+    //       description: "Please enter a valid URL for the image.",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case categoryIds.length < 1:
+    //     toast({
+    //       title: "Insuficient categories",
+    //       description: "Please select at least one category.",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case createdBy.length === 0:
+    //     toast({
+    //       title: "No author",
+    //       description: "Please select an author",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case location.length < 3:
+    //     toast({
+    //       title: "Unkown location",
+    //       description: "Please enter a adress with the city.",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case startTime.length === 0:
+    //     toast({
+    //       title: "Start time",
+    //       description: "Please enter a date and time",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
+    //   case endTime.length === 0:
+    //     toast({
+    //       title: "End time",
+    //       description: "Please enter a date and time",
+    //       status: "warning",
+    //       position: "top",
+    //     });
+    //     break;
 
-      default:
-        // Form validation complete > Places states in newEvent
-        const newEvent = {
-          createdBy,
-          title,
-          description,
-          image,
-          categoryIds,
-          location,
-          startTime,
-          endTime,
-        };
-        // Consider placing a action to prevent window.location.reload
-        // Post new event to server
-        fetch("http://localhost:3000/events", {
-          method: "POST",
-          body: JSON.stringify(newEvent),
-          headers: { "Content-Type": "application/json" },
-        }).then(() => {
-          closeForm();
-          window.location.reload();
-        });
+    //   default:
+    if (
+      validateForm(
+        title,
+        description,
+        image,
+        categoryIds,
+        createdBy,
+        location,
+        startTime,
+        endTime,
+        toast
+      )
+    ) {
+      // Form validation complete > Places states in newEvent
+      const newEvent = {
+        createdBy,
+        title,
+        description,
+        image,
+        categoryIds,
+        location,
+        startTime,
+        endTime,
+      };
+      // Consider placing a action to prevent window.location.reload
+      // Post new event to server
+      fetch("http://localhost:3000/events", {
+        method: "POST",
+        body: JSON.stringify(newEvent),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        closeForm();
+        window.location.reload();
+      });
     }
   };
 

@@ -129,6 +129,19 @@
       "startTime": "2023-10-29T19:34",
       "endTime": "2023-11-03T19:34",
       "id": 9
+    },
+    {
+      "createdBy": 1,
+      "title": "sadfasfsafasf",
+      "description": "asddfsafdaafdsafdsafdsfadsasfdfsdfd",
+      "image": "https://www.mediabistro.com/wp-content/uploads/2014/09/best-selling-author.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "BUIZERDF OFDSJIOsd",
+      "startTime": "2023-10-29T02:26",
+      "endTime": "2023-11-08T02:26",
+      "id": 10
     }
   ],
   "categories": [

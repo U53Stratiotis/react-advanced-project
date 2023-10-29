@@ -1,7 +1,7 @@
 import { Form } from "react-router-dom";
 import { useState } from "react";
 import { useContextData } from "../context/AppContext";
-import { validateForm } from "./EditEventValidation";
+import { validateForm } from "./eventValidation";
 import { useToast, Center, Heading } from "@chakra-ui/react";
 import styles from "./EditEvent.module.css";
 
