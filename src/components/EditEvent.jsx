@@ -39,6 +39,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Form validation
     if (
       validateForm(
         title,
@@ -52,6 +53,7 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
         toast
       )
     ) {
+      // Form validation complete, pulls data from state
       const editEvent = {
         id,
         createdBy,
