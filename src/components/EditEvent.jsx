@@ -1,6 +1,7 @@
 import { Form } from "react-router-dom";
 import { useState } from "react";
 import { useContextData } from "../context/AppContext";
+import { validateForm } from "./EditEventValidation";
 import { useToast, Center, Heading } from "@chakra-ui/react";
 import styles from "./EditEvent.module.css";
 
@@ -37,58 +38,73 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
   // <<< Edit event button clicked >>>
   const handleSubmit = (e) => {
     e.preventDefault();
-    const editEvent = {
-      id,
-      createdBy,
-      title,
-      description,
-      image,
-      categoryIds,
-      location,
-      startTime,
-      endTime,
-    };
 
-    // Toasts
-    const editSuccesMessage = () => {
-      toast({
-        title: "Succes",
-        description: "The event has been updated.",
-        status: "success",
-        position: "top",
-      });
-    };
+    if (
+      validateForm(
+        title,
+        description,
+        image,
+        categoryIds,
+        createdBy,
+        location,
+        startTime,
+        endTime,
+        toast
+      )
+    ) {
+      const editEvent = {
+        id,
+        createdBy,
+        title,
+        description,
+        image,
+        categoryIds,
+        location,
+        startTime,
+        endTime,
+      };
 
-    const editErrorMessage = () => {
-      toast({
-        title: "Unable to edit Event",
-        description: "Please make sure all requirements are met.",
-        status: "error",
-        position: "top",
-      });
-    };
+      // Toasts
+      const editSuccesMessage = () => {
+        toast({
+          title: "Succes",
+          description: "The event has been updated.",
+          status: "success",
+          position: "top",
+        });
+      };
 
-    // Consider changing this to a action to prevent window.location.reload
-    // Post editted event to server
-    fetch(`http://localhost:3000/events/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(editEvent),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(() => {
-        console.log("event editted");
-        closeForm();
-        editSuccesMessage();
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+      const editErrorMessage = () => {
+        toast({
+          title: "Unable to edit Event",
+          description: "Please make sure all requirements are met.",
+          status: "error",
+          position: "top",
+        });
+      };
+
+      // Consider changing this to a action to prevent window.location.reload
+      // Post editted event to server
+      fetch(`http://localhost:3000/events/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(editEvent),
+        headers: { "Content-Type": "application/json" },
       })
-      .catch(() => {
-        editErrorMessage();
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 4000);
+        .then(() => {
+          console.log("event editted");
+          closeForm();
+          editSuccesMessage();
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch(() => {
+          editErrorMessage();
+        });
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    }
   };
 
   return (
