@@ -64,6 +64,32 @@
       "location": "Shavasana Yoga School",
       "startTime": "2023-03-09T06:00:00.000Z",
       "endTime": "2023-03-09T07:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "createdBy": 2,
+      "title": "Test ID",
+      "description": "Can I remove ID STATE",
+      "image": "https://www.mediabistro.com/wp-content/uploads/2014/09/best-selling-author.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Buizerd SPijkenisse",
+      "startTime": "2023-10-29T00:58",
+      "endTime": "2023-11-06T18:58"
+    },
+    {
+      "id": 6,
+      "createdBy": 2,
+      "title": "ID TEST 2",
+      "description": "I think it automaticly makes one",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Bujizerd spijk",
+      "startTime": "2023-10-29T00:59",
+      "endTime": "2023-11-08T18:04"
     }
   ],
   "categories": [

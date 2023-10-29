@@ -10,7 +10,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [categoryIds, setCategoryIds] = useState([]);
-  const [id, setId] = useState("");
   const [createdBy, setCreatedBy] = useState("");
   const [location, setLocation] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -113,7 +112,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
       default:
         // Form validation complete > Places states in newEvent
         const newEvent = {
-          id,
           createdBy,
           title,
           description,
