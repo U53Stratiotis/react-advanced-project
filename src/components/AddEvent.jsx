@@ -30,15 +30,6 @@ export const AddEvent = ({ closeForm, categories, users }) => {
     setCreatedBy(selectedAuthorId);
   };
 
-  function isValidURL(url) {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
   // <<< Save event button clicked >>>
   const handleSubmit = (e) => {
     e.preventDefault();
