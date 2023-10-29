@@ -77,6 +77,19 @@
       "location": "fadfasfsadfsdasafdsfdasdfaadfsfd",
       "startTime": "2023-10-28T12:44",
       "endTime": "2023-11-02T12:44"
+    },
+    {
+      "id": 6,
+      "createdBy": "",
+      "title": "Programming",
+      "description": "Lets learn to program together",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Programming_code.jpg/800px-Programming_code.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "Home Rotterdam",
+      "startTime": "2023-10-29T17:40",
+      "endTime": "2024-11-27T23:45"
     }
   ],
   "categories": [

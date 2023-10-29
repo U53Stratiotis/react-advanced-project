@@ -19,19 +19,24 @@ import styles from "./EventsPage.module.css";
 export const EventsPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
-  const { events, filteredEvents, users, categories, setFilteredCategoryIds } =
-    useContextData();
+  const {
+    events,
+    filteredEvents,
+    users,
+    categories,
+    filteredCategoryIds,
+    setFilteredCategoryIds,
+  } = useContextData();
 
   const toggleCategories = () => {
     setShowCategories(!showCategories);
   };
 
   // Function to handle category selection (you can implement this part)
-  const handleFilteredCategoryChange = (event) => {
-    // Implement your filtering logic here
-    const selectedCategoryIds = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
+  const handleFilteredCategoryChange = (e) => {
+    const selectedCategoryIds = Array.from(e.target.selectedOptions, (option) =>
+      // change category from string to interger
+      parseInt(option.value)
     );
     setFilteredCategoryIds(selectedCategoryIds);
   };
@@ -52,30 +57,41 @@ export const EventsPage = () => {
   };
 
   // Add the following details when displaying an event: title, description, image, startTime & endTime, categories
-  const eventGrid = filteredEvents.map((event) => (
-    <Center key={event.id}>
-      <div className={styles.cards}>
-        <GridItem key={event.id} className="event" colSpan={1} rowSpan={1}>
-          <Link to={`/event/${event.id}`}>
-            <h1 className={styles.title}>{event.title}</h1>
-            <p className={styles.description}>{event.description}</p>
-            <Image
-              src={event.image}
-              className="event-image"
-              width="100%"
-              height="20rem"
-            />
-            <p className={styles.time}>
-              {event.startTime.slice(0, 16)} {">"} {event.endTime.slice(0, 16)}
-            </p>
-            <p className={styles.categories}>
-              {categoriesList(event.categoryIds).join(", ").toUpperCase()}
-            </p>
-          </Link>
-        </GridItem>
-      </div>
-    </Center>
-  ));
+  const eventGrid = filteredEvents
+    .filter((event) => {
+      // Filter events only if there are selected category options
+      return (
+        filteredCategoryIds.length === 0 || // Show all events if no options selected
+        filteredCategoryIds.some((categoryId) =>
+          event.categoryIds.includes(categoryId)
+        )
+      );
+    })
+    .map((event) => (
+      <Center key={event.id}>
+        <div className={styles.cards}>
+          <GridItem key={event.id} className="event" colSpan={1} rowSpan={1}>
+            <Link to={`/event/${event.id}`}>
+              <h1 className={styles.title}>{event.title}</h1>
+              <p className={styles.description}>{event.description}</p>
+              <Image
+                src={event.image}
+                className="event-image"
+                width="100%"
+                height="20rem"
+              />
+              <p className={styles.time}>
+                {event.startTime.slice(0, 16)} {">"}{" "}
+                {event.endTime.slice(0, 16)}
+              </p>
+              <p className={styles.categories}>
+                {categoriesList(event.categoryIds).join(", ").toUpperCase()}
+              </p>
+            </Link>
+          </GridItem>
+        </div>
+      </Center>
+    ));
 
   return (
     <>

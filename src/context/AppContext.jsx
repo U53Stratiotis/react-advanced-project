@@ -19,9 +19,8 @@ export const fetchData = async () => {
 };
 
 export const AppContextProvider = ({ children }) => {
-  const [searchText, setSearchText] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [filteredCategoryIds, setFilteredCategoryIds] = useState();
+  const [filteredCategoryIds, setFilteredCategoryIds] = useState([]);
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState();
   const [users, setUsers] = useState();
