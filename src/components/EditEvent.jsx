@@ -9,14 +9,15 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
 
   // EventsData from fetchData
   const { events } = useContextData();
+  // Define the current event with ID
   const event = events.find((sEvent) => sEvent.id === eventId);
+  const id = event.id;
 
   // States get set to initial fetchData
   const [title, setTitle] = useState(event.title);
   const [description, setDescription] = useState(event.description);
   const [image, setImage] = useState(event.image);
   const [categoryIds, setCategoryIds] = useState(event.categoryIds);
-  const [id, setId] = useState(event.id);
   const [createdBy, setCreatedBy] = useState(event.createdBy);
   const [location, setLocation] = useState(event.location);
   const [startTime, setStartTime] = useState(event.startTime);

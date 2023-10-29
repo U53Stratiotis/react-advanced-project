@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
-
 import styles from "./Navigation.module.css";
 
 export const Navigation = () => {
