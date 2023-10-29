@@ -9,11 +9,11 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
 
   // EventsData from fetchData
   const { events } = useContextData();
-  // Define the current event with ID
+  // Define the current event with ID, we use this for our params in fetch
   const event = events.find((sEvent) => sEvent.id === eventId);
   const id = event.id;
 
-  // States get set to initial fetchData
+  // States get set to initial fetchData, contains body in fetch
   const [title, setTitle] = useState(event.title);
   const [description, setDescription] = useState(event.description);
   const [image, setImage] = useState(event.image);
