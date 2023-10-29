@@ -30,22 +30,6 @@ export const loader = async () => {
   };
 };
 
-// export const loader = async ({ params }) => {
-//   const user = await fetch(`http://localhost:3000/users/${params.userId}`);
-//   const posts = await fetch(
-//     `http://localhost:3000/posts?userId=${params.userId}`
-//   );
-//   const comments = await fetch(
-//     `http://localhost:3000/comments?userId=${params.userId}`
-//   );
-
-//   return {
-//     user: await user.json(),
-//     posts: await posts.json(),
-//     comments: await comments.json(),
-//   };
-// };
-
 export const EventPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isWarningVisible, setIsWarningVisible] = useState(false);

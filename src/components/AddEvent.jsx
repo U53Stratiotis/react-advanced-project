@@ -77,6 +77,14 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           position: "top",
         });
         break;
+      case createdBy.length === 0:
+        toast({
+          title: "No author",
+          description: "Please select an author",
+          status: "warning",
+          position: "top",
+        });
+        break;
       case location.length < 3:
         toast({
           title: "Unkown location",
@@ -141,6 +149,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Title</span>
             <input
               name="title"
+              placeholder="minimum 3 letters"
               maxLength="20"
               required
               onChange={(e) => setTitle(e.target.value)}
@@ -150,6 +159,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Short description</span>
             <textarea
               name="description"
+              placeholder="minimum 15 letters"
               rows="2"
               maxLength="35"
               required
@@ -160,6 +170,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Image URL</span>
             <input
               name="imgUrl"
+              placeholder="copy & paste url here"
               type="url"
               onChange={(e) => setImage(e.target.value)}
             />
@@ -182,6 +193,9 @@ export const AddEvent = ({ closeForm, categories, users }) => {
           <label>
             <span>Author</span>
             <select name="userId" required onChange={handleAuthorChange}>
+              <option value="" disabled selected>
+                Select an author
+              </option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -193,6 +207,7 @@ export const AddEvent = ({ closeForm, categories, users }) => {
             <span>Location</span>
             <textarea
               name="location"
+              placeholder="adres & city"
               rows="1"
               maxLength="40"
               required

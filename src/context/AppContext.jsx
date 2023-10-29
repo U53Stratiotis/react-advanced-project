@@ -35,7 +35,6 @@ export const AppContextProvider = ({ children }) => {
     });
   }, []);
 
-  // Find a way to render events based on category.
   return (
     <AppContext.Provider
       value={{

@@ -8,7 +8,7 @@ import {
   GridItem,
   Button,
   Modal,
-  Select,
+  Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useContextData } from "../context/AppContext";
@@ -20,7 +20,6 @@ export const EventsPage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const {
-    events,
     filteredEvents,
     users,
     categories,
@@ -93,6 +92,14 @@ export const EventsPage = () => {
       </Center>
     ));
 
+  const noMatchesMessage = (
+    <Center>
+      <Text mt={500} fontSize="xl" fontWeight="bold" textDecoration="underline">
+        No matches found
+      </Text>
+    </Center>
+  );
+
   return (
     <>
       <Box bg="blue.100" height="auto" minHeight="95vh" padding={8}>
@@ -133,7 +140,8 @@ export const EventsPage = () => {
             {showCategories && (
               <>
                 <span>
-                  CTRL + click
+                  <p style={{ marginTop: "2rem" }}>CTRL + click</p>
+                  <p>to select multiple/unselect</p>
                   <select
                     name="categoriesId"
                     multiple
@@ -160,13 +168,18 @@ export const EventsPage = () => {
           </Box>
         </Center>
         <Box>
-          <Grid
-            className={styles.gridContainer}
-            templateColumns="repeat(2, 1fr)"
-            gap={4}
-          >
-            {eventGrid}
-          </Grid>
+          {/* Conditionally render the message or eventGrid */}
+          {eventGrid.length === 0 ? (
+            noMatchesMessage
+          ) : (
+            <Grid
+              className={styles.gridContainer}
+              templateColumns="repeat(2, 1fr)"
+              gap={4}
+            >
+              {eventGrid}
+            </Grid>
+          )}
         </Box>
       </Box>
       {isFormVisible && (
