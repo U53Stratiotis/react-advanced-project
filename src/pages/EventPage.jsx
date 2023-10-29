@@ -150,16 +150,16 @@ export const EventPage = () => {
           <Flex
             position="absolute"
             top="570"
-            left="880"
+            left="840"
             justify="center"
             align="center"
           >
             <Box>
               <Button bg="red" size="lg" onClick={handleDelete}>
-                YES
+                DELETE
               </Button>{" "}
               <Button bg="green" size="lg" onClick={closeWarningMessage}>
-                NO{" "}
+                PRESERVE{" "}
               </Button>
             </Box>
           </Flex>
