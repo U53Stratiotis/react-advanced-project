@@ -7,6 +7,10 @@ export const fetchData = async () => {
   const categories = await fetch(`http://localhost:3000/categories`);
   const users = await fetch("http://localhost:3000/users");
 
+  console.log(events);
+  console.log(categories);
+  console.log(users);
+
   const eventsData = await events.json();
   const categoriesData = await categories.json();
   const usersData = await users.json();
