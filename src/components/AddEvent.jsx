@@ -61,14 +61,11 @@ export const AddEvent = ({ closeForm, categories, users }) => {
       };
       // Consider placing a action to prevent window.location.reload
       // Post new event to server
-      fetch(
-        "https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/events",
-        {
-          method: "POST",
-          body: JSON.stringify(newEvent),
-          headers: { "Content-Type": "application/json" },
-        }
-      ).then(() => {
+      fetch("http://localhost:3000/events", {
+        method: "POST",
+        body: JSON.stringify(newEvent),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
         closeForm();
         window.location.reload();
       });

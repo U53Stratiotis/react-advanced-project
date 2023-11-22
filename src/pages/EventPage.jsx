@@ -123,12 +123,9 @@ export const EventPage = () => {
 
   // Deletehandler
   const handleDelete = () => {
-    fetch(
-      `https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/events/${eventId}`,
-      {
-        method: "DELETE",
-      }
-    )
+    fetch(`http://localhost:3000/events/${eventId}`, {
+      method: "DELETE",
+    })
       .then(() => {
         deleteSuccesMessage();
         navigate("/");
