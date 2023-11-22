@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+// Run the 'json-server events.json' command to set up json file on a local server'
 
 export const AppContext = createContext({});
 
