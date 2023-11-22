@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-// Run the 'json-server events.json' command to set up json file on a local server'
+// Run the 'json-server events.json'command to set up json file on a local server on port 3000'
 
 export const AppContext = createContext({});
 
