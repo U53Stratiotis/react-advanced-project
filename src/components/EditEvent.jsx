@@ -87,11 +87,14 @@ export const EditEvent = ({ closeForm, categories, users, eventId }) => {
 
       // Consider changing this to a action to prevent window.location.reload
       // Post editted event to server
-      fetch(`http://localhost:3000/events/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(editEvent),
-        headers: { "Content-Type": "application/json" },
-      })
+      fetch(
+        `https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/events/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(editEvent),
+          headers: { "Content-Type": "application/json" },
+        }
+      )
         .then(() => {
           console.log("event editted");
           closeForm();

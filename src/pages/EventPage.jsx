@@ -15,9 +15,15 @@ import {
 } from "@chakra-ui/react";
 
 export const loader = async () => {
-  const events = await fetch(`http://localhost:3000/events`);
-  const categories = await fetch(`http://localhost:3000/categories`);
-  const users = await fetch(`http://localhost:3000/users`);
+  const events = await fetch(
+    `https://my-json-server.typicode.com/U53Stratiotis/event-app-2023/events`
+  );
+  const categories = await fetch(
+    `https://my-json-server.typicode.com/U53Stratiotis/event-app-2023/categories`
+  );
+  const users = await fetch(
+    "https://my-json-server.typicode.com/U53Stratiotis/event-app-2023/users"
+  );
 
   const eventsData = await events.json();
   const usersData = await users.json();
@@ -117,9 +123,12 @@ export const EventPage = () => {
 
   // Deletehandler
   const handleDelete = () => {
-    fetch(`http://localhost:3000/events/${eventId}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/events/${eventId}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then(() => {
         deleteSuccesMessage();
         navigate("/");

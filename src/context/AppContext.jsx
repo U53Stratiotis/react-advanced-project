@@ -4,9 +4,19 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 export const AppContext = createContext({});
 
 export const fetchData = async () => {
-  const events = await fetch(`http://localhost:3000/events`);
-  const categories = await fetch(`http://localhost:3000/categories`);
-  const users = await fetch("http://localhost:3000/users");
+  // const events = await fetch(`http://localhost:3000/events`);
+  // const categories = await fetch(`http://localhost:3000/categories`);
+  // const users = await fetch("http://localhost:3000/users");
+
+  const events = await fetch(
+    `https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/events`
+  );
+  const categories = await fetch(
+    `https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/categories`
+  );
+  const users = await fetch(
+    "https://my-json-server.typicode.com/U53Stratiotis/react-advanced-project/users"
+  );
 
   console.log(events);
   console.log(categories);
